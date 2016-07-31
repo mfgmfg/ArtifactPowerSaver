@@ -1,17 +1,18 @@
 local _G = _G
 
-local function IsItemArtifactPower(itemLink)
+local ArtifactPowerTooltipText = "|cFFE6CC80"..ARTIFACT_POWER.."|r"
+
+local function IsItemArtifactPower()
     local result = false
     for i = 1, GameTooltip:NumLines() do
-        result = _G[GameTooltip:GetName()..'TextLeft'..i]:GetText() == "|cFFE6CC80"..ARTIFACT_POWER.."|r"
-        if result then break end
+        result = _G['GameTooltipTextLeft'..i]:GetText() == ArtifactPowerTooltipText
+        if result then return result end
     end
     return result
 end
 
 local function attachItemTooltip(self)
-    local _,link = self:GetItem()
-    if IsItemArtifactPower(link) then
+    if IsItemArtifactPower() then
         if ArtifactPowerSaver_PreferredSpec ~= GetSpecialization() then
             self:AddLine(SPELL_FAILED_CUSTOM_ERROR_304,255,0,0,true)
         else 
@@ -36,7 +37,7 @@ f:SetScript('OnEvent', function(self, event, ...)
         local dropDown = CreateFrame("FRAME", "APSDropDown", ArtifactPowerSaver.panel, "UIDropDownMenuTemplate")
         dropDown:SetPoint("TOPLEFT",fs,"RIGHT",0,10)
         UIDropDownMenu_SetWidth(dropDown, 250)
-        UIDropDownMenu_SetText(dropDown, select(2,GetSpecializationInfo(ArtifactPowerSaver_PreferredSpec))) -- current spec
+        UIDropDownMenu_SetText(dropDown, select(2,GetSpecializationInfo(ArtifactPowerSaver_PreferredSpec)))
 
         function dropDown:SetValue(newValue)
          ArtifactPowerSaver_PreferredSpec = newValue
