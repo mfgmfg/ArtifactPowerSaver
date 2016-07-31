@@ -40,17 +40,17 @@ f:SetScript('OnEvent', function(self, event, ...)
         UIDropDownMenu_SetText(dropDown, select(2,GetSpecializationInfo(ArtifactPowerSaver_PreferredSpec)))
 
         function dropDown:SetValue(newValue)
-         ArtifactPowerSaver_PreferredSpec = newValue
-         UIDropDownMenu_SetText(dropDown, select(2,GetSpecializationInfo(newValue)))
+            ArtifactPowerSaver_PreferredSpec = newValue
+            UIDropDownMenu_SetText(dropDown, select(2,GetSpecializationInfo(newValue)))
         end
 
         UIDropDownMenu_Initialize(dropDown, function(self, menuList)
-          local info = UIDropDownMenu_CreateInfo()
-          info.func = self.SetValue
-          for i = 1,GetNumSpecializations() do
-           info.text, info.arg1, info.checked = select(2,GetSpecializationInfo(i)), i, i == ArtifactPowerSaver_PreferredSpec
-           UIDropDownMenu_AddButton(info)
-          end
+            local info = UIDropDownMenu_CreateInfo()
+            info.func = self.SetValue
+            for i = 1,GetNumSpecializations() do
+                info.text, info.arg1, info.checked = select(2,GetSpecializationInfo(i)), i, i == ArtifactPowerSaver_PreferredSpec
+                UIDropDownMenu_AddButton(info)
+            end
         end)
 
         InterfaceOptions_AddCategory(ArtifactPowerSaver.panel)
