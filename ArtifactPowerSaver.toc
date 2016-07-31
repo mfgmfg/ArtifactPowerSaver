@@ -2,7 +2,7 @@
 ## Title: ArtifactPowerSaver
 ## Notes: ArtifactPowerSaver, displays warning on Artifact Power item tooltips if you are not in your preferred spec
 ## Author: mfgmfg
-## Version: 0.1
+## Version: 0.2
 ## SavedVariablesPerCharacter: ArtifactPowerSaver_PreferredSpec
 
 ArtifactPowerSaver.lua

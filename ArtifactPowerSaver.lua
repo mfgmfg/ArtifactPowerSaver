@@ -2,7 +2,7 @@ local _G = _G
 
 local function IsItemArtifactPower(itemLink)
     local result = false
-    for i = 2, 3 do -- only check the 2nd or 3rd lines.. maybe check all just in case other addon does funny stuff?
+    for i = 1, GameTooltip:NumLines() do
         result = _G[GameTooltip:GetName()..'TextLeft'..i]:GetText() == "|cFFE6CC80"..ARTIFACT_POWER.."|r"
         if result then break end
     end
@@ -13,9 +13,9 @@ local function attachItemTooltip(self)
     local _,link = self:GetItem()
     if IsItemArtifactPower(link) then
         if ArtifactPowerSaver_PreferredSpec ~= GetSpecialization() then
-            self:AddLine("!!! WARNING: YOU ARE NOT IN YOUR PREFERRED SPEC !!!",255,0,0,true)
+            self:AddLine(SPELL_FAILED_CUSTOM_ERROR_304,255,0,0,true)
         else 
-            self:AddLine("You are in your preferred spec!",0,255,0,true)
+            self:AddLine(format(LOOT_SPECIALIZATION_DEFAULT,select(2,GetSpecializationInfo(GetSpecialization()))),0,255,0,true)
         end
     end
 end
@@ -30,11 +30,11 @@ f:SetScript('OnEvent', function(self, event, ...)
         ArtifactPowerSaver.panel = CreateFrame("Frame", "ArtifactPowerSaverPanel", UIParent)
         ArtifactPowerSaver.panel.name = "ArtifactPowerSaver"
 
-
-
-          -- Create the dropdown, and configure its appearance
+        local fs = ArtifactPowerSaver.panel:CreateFontString("PrefSpec", nil, "GameFontNormal")
+        fs:SetText(CHOOSE_SPECIALIZATION..":")
+        fs:SetPoint("TOPLEFT",10,-20)
         local dropDown = CreateFrame("FRAME", "APSDropDown", ArtifactPowerSaver.panel, "UIDropDownMenuTemplate")
-        dropDown:SetPoint("TOPLEFT",0,-20)
+        dropDown:SetPoint("TOPLEFT",fs,"RIGHT",0,10)
         UIDropDownMenu_SetWidth(dropDown, 250)
         UIDropDownMenu_SetText(dropDown, select(2,GetSpecializationInfo(ArtifactPowerSaver_PreferredSpec))) -- current spec
 
